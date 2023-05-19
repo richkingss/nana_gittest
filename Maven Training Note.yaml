@@ -1,0 +1,231 @@
+From the github, Developers build their script codes  which will be tested in maven 
+the script codes are: 
+1. Build scripts
+2. Source code
+3. Unit test code
+
+
+The test in Maven is in the format of 
+-- .jar (java applications)
+-- .war (Web application)
+-- .ear ()
+
+
+
+
+
+Maven Running Note:
+
+Apache Maven is an open source build automation tool used primarily for java applications.
+It is used to build deployable artifact(.jar, .war, .ear) from source code
+
+
+Maven:
+  - enforces specific standard to write the source code
+  - uses a standardized directory/layout
+  - has a project lifecyle
+  - has a dependency management system
+  - logic for execution at various lifecyle of project
+
+Main directory:
+build script ---> pom.xml
+source code ---> src/main  directory
+unit test case --> another directory
+
+Maven will create: (it own directory )
+  - resource 
+  - built artifact - target
+
+POM file - Project Object Model
+The POM.xml file is a Project Object Model (POM) file used by Apache Maven, 
+a popular build automation tool, to manage and build Java-based projects. 
+The POM.xml file contains project information, configuration details, and dependencies required for building the project.
+
+Here are some common elements found in a POM.xml file:
+  - Project information: includes project name, description, version, and organization information.
+  - Build configuration: includes information about the build process, such as source directories, target directories, and plugins used for building the project.
+  - Dependencies: lists all the external libraries and frameworks that the project depends on.
+  - Plugins: lists all the Maven plugins used to build the project.
+  - Profiles: allow developers to define different build configurations for different environments, such as development, testing, and production.
+
+
+Type of Packages in Maven:
+  - JAR - java application archive - standalone application
+  - WAR - web application archive - web applications
+  - EAR - enterprise application archive - enterprise application (JAR+WAR)
+
+
+Build Tools:
+  Java based:
+    Maven --- pom.xml     (100 LOC <line of code>)
+    ANT ---- build.xml    (300 LOC <line of code>)
+    Gradle --- build.gradle
+
+  NodeJS:
+    npm
+
+  .Net based:
+    NAnt
+    MSBuild
+
+  python based:
+    pybuilder
+
+  Ruby based:
+    Rake
+
+SDLC (Software Development Life Cycle)
+DEVEOPS --> coding --> Build --> Testing --> Back-up --> Deploy
+create artifacts for deployment into server(Tomcat)
+
+-- The developer buid the codes. and push it to the repository, thats where your work starts, 
+   you build with Maven, do your Testing, and when it passes you do your backup in Nexus and you 
+   deploy with TOMCAT. 
+
+  
+
+File naming convention:
+  Text --> .txt
+  bash shell script --> .sh
+  java files --> .java 
+  python file --> .py  
+  YAML/YML file --> .yaml or .yml
+
+what does a build mean: compiling and creating package from a source code
+
+Maven Requirements:
+  - Maven is open source
+  - Maven is java-based 
+       - Java runtime environment  -JRE
+       - Java development kit - JDK -- which contains JVM(Java Virtual Machine)
+       - JVM in Java is the engine that drives the Java Code. It converts Java bytecode into machines language.
+
+ jomacs.java
+    echo "This is DevOps class" > jomacs.java 
+     "This is DevOps class" - Human readable
+     [011011100000100111001] - byte codes - Machine readable
+  javac - convert the script into java classes.
+
+JVM will use java classes (byte codes) to do a build into artifacts(JAR, WAR, EAR)
+
+
+Maven Lifecycle:
+ - The phases maven passes through to create deployable artifact. A phase specific goal.
+
+3 Lifecycles:
+  1. Clean: cleaning out any old build. Starting your project on a clean file structure
+  2. Site/Swagger: - create java classes (byte codes [1010101010])
+                    JVM will interpret the byte codes.
+  3. Default:
+
+    mvn validate - maven will validate the project is correct and all necessary information is available
+
+    mvn compile - compile the source code of the project
+
+    mvn test - Test the compiled source code using a unit testing framework
+
+    mvn package - package the compiled code in a deployable/distributable format e.g a  Java program will be packaged as a Java file or a Java archive file (WAR, JAR, EAR)
+
+    mvn install - Install the package into the local repository for use as a dependency in other projects locally.
+
+    mvn deploy - It copies the final package to the remote repository for sharing with other developers and projects.
+
+mvn clean     -- going to clean up old build,...Thus to clear everything. 
+mvn package   -- its going to do validation, compile, and test and package it as a deploy artifact. 
+== mvn clean pakage
+-- The default is also known as the Maven goal. 
+
+
+
+
+Maven Repositories:
+  - Local repository ---> ~/.m2/repository
+  - Remote repository    NEXUS/Artifactory
+  - Central repository (on the website)
+
+
+
+Maven Installation steps for RedHat:
+Step 1. Requirements:
+sudo hostname maven
+sudo su - ec2-user
+
+cd /opt
+sudo yum install wget nano tree unzip git -y
+sudo yum install java-11-openjdk-devel java-1.8.0-openjdk-devel -y
+
+java -version
+git --version
+
+Step 2. Install Maven.sh: Download the Maven Software
+sudo wget https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.zip
+sudo unzip apache-maven-3.8.8-bin.zip 
+sudo rm -rf apache-maven-3.8.8-bin.zip
+sudo mv apache-maven-3.8.8/ maven
+
+Step 3. Set Environmental Variable: Setting the home of Maven  -
+#vi ~/.bash_profile
+sudo vi ~/.bash_profile
+export M2_HOME=/opt/maven
+export PATH=$PATH:$M2_HOME/bin
+
+source ~/.bash_profile
+
+Step 4. Check the Maven version:
+mvn -version
+
+
+
+
+Maven Installation steps for Ubuntu:
+
+Step 1. Requirements:
+sudo hostname maven
+sudo su - ubuntu
+
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt install wget nano tree unzip git -y
+sudo apt install default-jdk -y
+
+
+Step 2. Install Maven.sh: Download the Maven Software
+sudo wget https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.zip
+sudo unzip apache-maven-3.8.8-bin.zip 
+sudo rm -rf apache-maven-3.8.8-bin.zip
+sudo mv apache-maven-3.8.8/ maven
+
+
+Step 3. Set Environmental Variable: Setting the home of Maven  -
+#vi ~/.bashrc
+sudo vi ~/.bashrc
+export M2_HOME=/opt/maven
+export PATH=$PATH:$M2_HOME/bin
+
+source ~/.bashrc
+
+Step 4. Check the Maven version:
+mvn -version
+
+git clone https://github.com/JOMACS-IT/web-app.git
+
+mvn clean -
+mvn package
+-- After the mvn package, the needed files and plugins are down loaded 
+   from MAVEN central repository and kept in a hidden folder known as 
+   .m2 in our home directory/ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

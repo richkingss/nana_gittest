@@ -1,0 +1,110 @@
+Tomcat Training Note:
+
+Introduction 
+Tomcat or Apache Tomcat is a light weight, open source web contaner used to deploy and 
+run java based web applications. It is developed by Apache software \
+Foundation. 
+
+What is a web server: (public subnet)
+A web server is a program that uses HHTP (Hypertex Transfer
+Protocol) protocol to serves web content (HTML and static content)
+to users. 
+
+
+Examples of a web server: 
+- Apache HTTP server 
+- Ngix 
+- IBM HTTP server 
+
+What is Application Server?: (private subnet)
+An application server is a container upon which you can build and expose 
+bussiness logic processes to client application through various protocol 
+including HTTP in a n-tier architecture. 
+
+Default Port Numbers: 
+HTTP: 80, 8080 HyperText Transfer Protocol 
+HTTPS: 433 Hypertext Transfer Protocol Secured
+SSH: 22 (Linux)
+Remote Desktop Protocol (RDP): 3389 (Windows)
+Telnet: 23. Its main function is to establish a connection between a server  
+        and are 
+SolarQube: 9000
+Nexus: 8081  
+SMTP: 25. SMTP is known as the simple Mail Transfer Protocol.
+FTP: 20, 21 FTP is the abbreviation of "File Transfer Protocol "
+DNS: 53, DNS is reffered to as "Domain name System"
+
+
+===
+===
+===
+We looked at the Linux file system: 
+--
+--
+
+
+Installing Tomcat on Ubuntu Server (EC2 Instance):
+# EC2 t2 micro Ubuntu 20.24 
+
+sudo hostname tomcat
+sudo su - ubuntu 
+cd /opt
+
+# Install pre-requisites/Requirements
+sudo apt update 
+sudo apt install openjdk-11-jdk wge -y
+java -version 
+
+#Download  tomcat software and extract it. 
+
+VERSION=9.0.73 
+sudo wget https://download.apache.org/tomcat/tomcat-9/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz
+https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.75/bin/apache-tomcat-9.0.75.tar.gz
+
+
+
+sudo tar -xzvf apache-tomcat-${version}.tar.gz
+sudo rm apache-tomcat-${version}.tar.gz
+sudo mv apache-tomcat-${version} tomcat9 
+
+sudo chmod 777 -R /opt/tomcat9 
+sudo sh /opt/tomcat/bin/startup.sh
+
+-- There a an .sh file also known as CATALINA. Which is use     
+   to start and stop our Tomcat services. 
+
+
+sudo ln -s /opt/tomcat9/bin/startup.sh /usr/bin/starttomcat
+sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
+
+sudo vi /opt/tomcat9/webapps/manager/META-INF/context.xmli
+-- "Comment these line out of the XML file."
+<!--
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+--> 
+
+sudo vi /opt/tomcat9/conf/tomcat-users.xml 
+-- Here you setup your users account and password. 
+
+  <user username="Nana" password="<admin123>" roles="manager-gui,manager-script,admin-gui"/>
+  <user username="osei" password="<admin123>" roles="manager-gui"/>
+
+ sudo  passwd ubuntu -- admin123 
+ sudo vi /etc/ssh/sshd.config
+-- change PasswordAuthentication to : "Yes"
+-- This is to request for password every time you want to loggin 
+
+sudo systemctl restart sshd 
+-- This is to restart the service 
+
+sudo /opt/tomcat9/conf/server.xml 
+-- Change connector port = 9090
+-- To change the default port from 8080... to
+
+
+
+
+
+
+
